@@ -3,11 +3,11 @@ package edu.ufp.inf.sd.project.client;
 import edu.ufp.inf.sd.project.server.JobShopRI;
 import edu.ufp.inf.sd.project.util.geneticalgorithm.CrossoverStrategies;
 import edu.ufp.inf.sd.project.util.geneticalgorithm.GeneticAlgorithmJSSP;
-import edu.ufp.inf.sd.project.util.tabusearch.TabuSearchJSSP;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
-import java.rmi.RemoteException;
+
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +47,8 @@ public class JobShopClient {
             hwc.lookupService();
             //3. ============ Play with service ============
             hwc.playService();
+            //Init Observer
+            //todo: initObserver(args);
         }
     }
 
@@ -110,4 +112,16 @@ public class JobShopClient {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /*
+    private static void initObserver(String[] args) {
+        try {
+            String username = this.jTextFieldUsername.getText();
+            //observer = new ObserverImpl(username, this, args);
+            observer = new ObserverImpl(username, this, this.subjectRI);
+        } catch (Exception e) {
+            Logger.getLogger(ObserverGuiClient.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+     */
 }
