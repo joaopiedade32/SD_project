@@ -1,5 +1,5 @@
 @REM ************************************************************************************
-@REM Description: run Pingclient
+@REM Description: run JobShopClient
 @REM Author: Rui Moreira
 @REM Date: 20/02/2019
 @REM pwd: /Users/rui/Documents/NetBeansProjects/SD/src/edu/ufp/inf/sd/rmi/helloworld
@@ -19,12 +19,12 @@
 @REM These vars will be used to check the output folder (whereto classes are generated)
 @SET NETBEANS=NetBeans
 @SET INTELLIJ=IntelliJ
+@REM Set CURRENT_IDE=%INTELLIJ%
 @Set CURRENT_IDE=%INTELLIJ%
-@REM Set CURRENT_IDE=%NETBEANS%
 
 @REM ==== JAVA NAMING STUFF ====
 @Set JAVAPROJ_NAME=SD
-@set JAVAPROJ="C:\\Users\\Mariana\\Documents\\Aulas\\SDIS2021\\SD_project"
+@set JAVAPROJ=C:\\Users\\Mariana\\IdeaProjects\\SD_Project
 @Set PACKAGE=project
 @Set PACKAGE_PREFIX=edu.ufp.inf.sd
 @Set PACKAGE_PREFIX_FOLDERS=edu/ufp/inf/sd
@@ -40,7 +40,7 @@
 @REM ==== NETWORK STUFF ====
 @REM Must run http server on codebase host:
 @REM Python 2: python -m SimpleHTTPServer 8000
-Python 3: python -m http.server 8000
+@REM Python 3: python -m http.server 8000
 @Set MYLOCALIP=localhost
 @REM MYLOCALIP=192.168.56.1
 @Set REGISTRY_HOST=%MYLOCALIP%
@@ -60,7 +60,7 @@ Python 3: python -m http.server 8000
 @Set JAVAPACKAGEPATH=%PACKAGE_PREFIX_FOLDERS%/%PACKAGE%/%SCRIPT_ROLE%
 @Set JAVASCRIPTSPATH=%PACKAGE_PREFIX_FOLDERS%/%PACKAGE%/runscripts_rmi
 @REM Set JAVASECURITYPATH=%PACKAGE_PREFIX_FOLDERS%/%PACKAGE%/securitypolicies
-@Set JAVASECURITYPATH=edu\\ufp\\inf\\sd\\%PACKAGE%\\securitypolicies
+@Set JAVASECURITYPATH=edu\\ufp\\inf\\sd\\rmi\\%PACKAGE%\\securitypolicies
 @Set SERVICE_NAME=%SERVICE_PREFIX%Service
 @Set SERVICE_URL=rmi://%REGISTRY_HOST%:%REGISTRY_PORT%/%SERVICE_NAME%
 

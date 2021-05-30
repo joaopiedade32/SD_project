@@ -1,22 +1,29 @@
 package edu.ufp.inf.sd.project.client;
 
+import edu.ufp.inf.sd.project.server.JobGroupImpl;
+
 import java.util.ArrayList;
 
 public class DataBaseWorkers {
 
     private final ArrayList<Worker> workers;
+    private final ArrayList<JobGroupImpl> jobGroups;
 
-    public DataBaseWorkers(ArrayList<Worker> workers) {
+
+    public DataBaseWorkers(ArrayList<Worker> workers, ArrayList<JobGroupImpl> jobGroups) {
         this.workers = workers;
+        this.jobGroups = jobGroups;
     }
 
     public DataBaseWorkers() {
         workers = new ArrayList<>();
+        jobGroups = new ArrayList<>();
     }
 
     /**
      * Registar um novo worker.
-     *  @param u username
+     *
+     * @param u username
      * @param p password
      * @return
      */
@@ -28,7 +35,8 @@ public class DataBaseWorkers {
     }
 
     /**
-     * verifica as credenciais do worker.
+     * verifica as credenciais do user.
+     *
      * @param u username
      * @param p password
      * @return
@@ -40,5 +48,26 @@ public class DataBaseWorkers {
             }
         }
         return false;
+    }
+
+    public void updateWorker(Worker worker) {
+        for (Worker w : this.workers) {
+            if(w.getUserName().equals(worker.getUserName())) {
+                w.setCredits(worker.getCredits());
+                return;
+            }
+        }
+    }
+
+    public ArrayList<JobGroupImpl> getJobGroups() {
+        return this.jobGroups;
+    }
+
+    public ArrayList<String> listJobGroups() {
+        ArrayList<String> jobGroupsList = new ArrayList<>();
+        for (JobGroupImpl jobGroup : jobGroups) {
+            jobGroupsList.add("[" + jobGroup.getId() + "] ");
+        }
+        return jobGroupsList;
     }
 }

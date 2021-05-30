@@ -37,5 +37,4 @@ public abstract class ObserverImpl implements ObserverRI {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
