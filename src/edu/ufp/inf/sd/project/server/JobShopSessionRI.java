@@ -17,11 +17,13 @@ public interface JobShopSessionRI extends Remote {
 
     public void deleteJobGroup(int id) throws RemoteException;
 
-    // User
+    public ArrayList<String> listTaskGroups();
+
+    // Worker
     public int showCredits() throws RemoteException;
 
     public void addCredits(int credits) throws RemoteException;
-    
+
     public String showMyUsername() throws RemoteException;
 
 }

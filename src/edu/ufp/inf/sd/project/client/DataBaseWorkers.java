@@ -28,8 +28,24 @@ public class DataBaseWorkers {
      * @return
      */
     public boolean register(String u, String p) {
-        if (!exists(u, p)) {
+        if (!exists(u)) {
             workers.add(new Worker(u, p));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * verifies if username has been taken.
+     *
+     * @param u username
+     * @return
+     */
+    public boolean exists(String u) {
+        for (Worker worker : this.workers) {
+            if (worker.getUserName().compareTo(u) == 0) {
+                return true;
+            }
         }
         return false;
     }
@@ -52,9 +68,8 @@ public class DataBaseWorkers {
 
     public void updateWorker(Worker worker) {
         for (Worker w : this.workers) {
-            if(w.getUserName().equals(worker.getUserName())) {
+            if (w.getUserName().equals(worker.getUserName())) {
                 w.setCredits(worker.getCredits());
-                return;
             }
         }
     }

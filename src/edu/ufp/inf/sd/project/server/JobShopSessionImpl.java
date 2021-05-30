@@ -57,7 +57,6 @@ public class JobShopSessionImpl extends UnicastRemoteObject implements JobShopSe
 
     @Override
     public void deleteJobGroup(int id) throws RemoteException {
-
         ArrayList<JobGroupImpl> jobGroups = this.database.getJobGroups();
         for (JobGroupImpl jobGroup : jobGroups) {
             if (jobGroup.getId() == id) {
@@ -66,6 +65,14 @@ public class JobShopSessionImpl extends UnicastRemoteObject implements JobShopSe
             }
         }
 
+    }
+
+    @Override
+    public ArrayList<String> listTaskGroups() {
+        ArrayList<String> jobGroups = new ArrayList<>();
+        for (JobGroupImpl jobGroup : this.database.getJobGroups())
+            jobGroups.add(jobGroup.getName());
+        return jobGroups;
     }
 
     @Override
