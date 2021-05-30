@@ -1,11 +1,17 @@
 package edu.ufp.inf.sd.project.client;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Worker {
 
     private String userName;
     private String password;
+    private Scanner scanner;
     private int credits;
 
     public Worker(String userName, String password) {
@@ -30,9 +36,13 @@ public class Worker {
         this.password = password;
     }
 
-    public int getCredits() { return credits; }
+    public int getCredits() {
+        return credits;
+    }
 
-    public void setCredits(int credits) { this.credits = credits; }
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
 
     @Override
     public String toString() {
@@ -71,5 +81,41 @@ public class Worker {
         */
 
         return 0;
+    }
+
+    /**
+     * attempts to read data contained inside files
+     * todo: differentiate first line from the rest
+     * @throws IOException
+     */
+    private void getData() throws IOException {
+        System.out.print("filename: ");
+        String filename = scanner.nextLine(), delimiter = " ";
+        BufferedReader br = openBufferedReader(".//src//edu//ufp//inf//sd//project//data//" + filename + ".txt");
+        ArrayList<Integer> dataList = new ArrayList<>();
+        if (br != null) {
+            String line = br.readLine();
+            while (line != null) {
+                String[] text = line.split(delimiter);
+                for (int i = 0; i < line.length(); i++)
+                    dataList.add(i, Integer.valueOf(text[0]));
+                line = br.readLine();
+            }
+            br.close();
+        }
+    }
+
+    /**
+     * @param path - Buffered Reader Path
+     * @return
+     */
+    private BufferedReader openBufferedReader(String path) {
+        try {
+            FileReader fr = new FileReader(path);
+            return new BufferedReader(fr);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
