@@ -12,7 +12,12 @@ public abstract class ObserverImpl implements ObserverRI {
     State lastObserverState;
     SubjectRI subjectRI;
 
-
+    /**
+     *
+     * @param id
+     * @param subjectRI
+     * @throws RemoteException
+     */
     public ObserverImpl(String id, SubjectRI subjectRI) throws RemoteException {
         super();
         this.id = id;
@@ -21,14 +26,26 @@ public abstract class ObserverImpl implements ObserverRI {
         this.subjectRI.attach(this);
     }
 
+    /**
+     *
+     * @param id
+     * @param arg
+     */
     public ObserverImpl(String id, String[] arg) {
         super();
     }
 
+    /**
+     *
+     * @return lastObserverState
+     */
     public State getLastObserverState() {
         return this.lastObserverState;
     }
 
+    /**
+     *
+     */
     public void update() {
         try {
             Logger.getLogger(this.getClass().getName()).log(Level.INFO, "Update called on client {0}", new Object[]{this.id});

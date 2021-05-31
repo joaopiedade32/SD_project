@@ -34,11 +34,17 @@ public class JobGroupImpl extends UnicastRemoteObject implements JobGroupRI {
     }
 
     @Override
+    /**
+     * detach workers from jobgroup
+     */
     public void detach(String username) throws RemoteException {
         this.workers.remove(username);
     }
 
     @Override
+    /**
+     * add task to worker
+     */
     public void requestTask(String username) throws RemoteException {
         System.out.println("New task requested by " + username);
         //todo: rest

@@ -61,6 +61,7 @@ public class JobShopClient {
         }
     }
 
+
     public JobShopClient(String args[]) {
         try {
             //List ans set args
@@ -122,6 +123,10 @@ public class JobShopClient {
         }
     }
 
+    /**
+     * register users
+     * @throws RemoteException
+     */
     private void register() throws RemoteException {
         System.out.print("Username: ");
         String username = scanner.nextLine();
@@ -135,6 +140,10 @@ public class JobShopClient {
             System.out.println("Username Already Taken, Please Try Again.");
     }
 
+    /**
+     * login
+     * @throws RemoteException
+     */
     private void login() throws RemoteException {
         System.out.print("Username: ");
         String username = scanner.nextLine();
@@ -151,6 +160,11 @@ public class JobShopClient {
         }
     }
 
+    /**
+     * logout
+     * @param username
+     * @throws RemoteException
+     */
     private void logout(String username) throws RemoteException {
         if (this.sessionRI != null) {
             factoryRI.logout(username);
@@ -160,31 +174,28 @@ public class JobShopClient {
 
     /*todo
     private void jobGroupCreate() throws RemoteException {
-        if (this.sessionRI != null) {
-            System.out.print("Group Name: ");
-            String name = scanner.nextLine();
 
-            this.jobShopRI = this.sessionRI.createJobGroup(name, 1000, "MD5", "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/darkc0de.txt", 10000, "e4753fff8a1519db80bf5c7187aecca4");
-
-            if (jobShopRI != null) {
-                Worker worker = new Worker(this.sessionRI.showMyUsername());
-            } else {
-                System.out.println("Erro ao criar grupo?");
-            }
-        }
     }
      */
 
+    /**
+     *
+     * @throws RemoteException
+     */
     private void jobGroupList() throws RemoteException {
         if (this.sessionRI != null) {
 
-            ArrayList<String> groups = this.sessionRI.listTaskGroups();
+            ArrayList<String> groups = this.sessionRI.listJobGroups();
             System.out.println("List of Groups:");
             for (String name : groups)
                 System.out.println(name);
         }
     }
 
+    /**
+     *
+     * @throws RemoteException
+     */
     private void jobGroupAddWorker() throws RemoteException {
         if (this.sessionRI != null) {
             System.out.println("Group ID: ");

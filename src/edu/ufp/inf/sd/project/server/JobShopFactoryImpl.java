@@ -17,12 +17,18 @@ public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFa
     }
 
     @Override
+    /**
+     * register user
+     */
     public boolean register(String username, String password) throws RemoteException {
         boolean register = this.db.register(username, password);
         return register;
     }
 
     @Override
+    /**
+     * login user
+     */
     public JobShopSessionRI login(String username, String password) throws RemoteException {
         if (this.sessions.containsKey(username)) {
             return this.sessions.get(username);
@@ -37,6 +43,9 @@ public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFa
     }
 
     @Override
+    /**
+     * logout user
+     */
     public JobShopSessionRI logout(String username) throws RemoteException {
         this.sessions.remove(username);
         return null;

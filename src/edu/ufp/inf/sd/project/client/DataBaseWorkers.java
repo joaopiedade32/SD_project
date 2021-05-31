@@ -66,6 +66,10 @@ public class DataBaseWorkers {
         return false;
     }
 
+    /**
+     *
+     * @param worker worker
+     */
     public void updateWorker(Worker worker) {
         for (Worker w : this.workers) {
             if (w.getUserName().equals(worker.getUserName())) {
@@ -74,10 +78,18 @@ public class DataBaseWorkers {
         }
     }
 
+    /**
+     *
+     * @return jobgroups
+     */
     public ArrayList<JobGroupImpl> getJobGroups() {
         return this.jobGroups;
     }
 
+    /**
+     *
+     * @return list of job groups
+     */
     public ArrayList<String> listJobGroups() {
         ArrayList<String> jobGroupsList = new ArrayList<>();
         for (JobGroupImpl jobGroup : jobGroups) {

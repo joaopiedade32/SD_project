@@ -18,6 +18,9 @@ public class JobShopSessionImpl extends UnicastRemoteObject implements JobShopSe
     }
 
     @Override
+    /**
+     * create job group
+     */
     public JobGroupRI createJobGroup(String name) throws RemoteException {
         //todo
         /*JobGroupImpl jobGroup = new JobGroupImpl(id);
@@ -28,11 +31,17 @@ public class JobShopSessionImpl extends UnicastRemoteObject implements JobShopSe
     }
 
     @Override
+    /**
+     * list job groups
+     */
     public ArrayList<String> listJobGroups() throws RemoteException {
         return this.database.listJobGroups();
     }
 
     @Override
+    /**
+     * join a job group
+     */
     public JobGroupRI joinJobGroup(int id) throws RemoteException {
         ArrayList<JobGroupImpl> jobGroups = this.database.getJobGroups();
         for (JobGroupImpl jobGroup : jobGroups) {
@@ -65,14 +74,6 @@ public class JobShopSessionImpl extends UnicastRemoteObject implements JobShopSe
             }
         }
 
-    }
-
-    @Override
-    public ArrayList<String> listTaskGroups() {
-        ArrayList<String> jobGroups = new ArrayList<>();
-        for (JobGroupImpl jobGroup : this.database.getJobGroups())
-            jobGroups.add(jobGroup.getName());
-        return jobGroups;
     }
 
     @Override

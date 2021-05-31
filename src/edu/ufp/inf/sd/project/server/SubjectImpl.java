@@ -37,6 +37,7 @@ public class SubjectImpl implements SubjectRI {
     }
 
     @Override
+
     public void attach(ObserverRI obsRI) throws RemoteException {
         if (!this.observers.contains(obsRI))
             this.observers.add(obsRI);
