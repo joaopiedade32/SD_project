@@ -1,5 +1,7 @@
 package edu.ufp.inf.sd.project.server;
 
+import edu.ufp.inf.sd.project.util.geneticalgorithm.CrossoverStrategies;
+import edu.ufp.inf.sd.project.util.geneticalgorithm.GeneticAlgorithmJSSP;
 import edu.ufp.inf.sd.project.util.tabusearch.TabuSearchJSSP;
 
 import java.rmi.RemoteException;
@@ -15,15 +17,23 @@ public class JobShopImpl extends UnicastRemoteObject implements JobShopRI {
     }
 
     @Override
-
     public int runTS(String jsspInstance) throws RemoteException {
 
         TabuSearchJSSP ts = new TabuSearchJSSP(jsspInstance);
         int makespan = ts.run();
 
-        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[TS] Makespan for {0} = {1}", new Object[]{jsspInstance,String.valueOf(makespan)});
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[TS] Makespan for {0} = {1}", new Object[]{jsspInstance, String.valueOf(makespan)});
 
         return makespan;
+    }
+
+    @Override
+    public void runGA(String jsspInstance, String queue, CrossoverStrategies crossoverStrategy) throws RemoteException {
+        GeneticAlgorithmJSSP ga = new GeneticAlgorithmJSSP(jsspInstance, queue, crossoverStrategy);
+
+        ga.run();
+
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, "[TS] Makespan for {0} = {1}", new Object[]{jsspInstance});
     }
 
 }

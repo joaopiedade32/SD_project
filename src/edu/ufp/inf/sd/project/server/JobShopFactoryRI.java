@@ -22,11 +22,4 @@ public interface JobShopFactoryRI extends Remote {
      */
     public JobShopSessionRI login(String username, String password) throws RemoteException;
 
-    /**
-     * logout
-     * @param username
-     * @return
-     * @throws RemoteException
-     */
-    public JobShopSessionRI logout(String username) throws RemoteException;
 }

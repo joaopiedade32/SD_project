@@ -20,11 +20,7 @@ public class SubjectImpl implements SubjectRI {
     public void notifyAllObservers() {
         for (Observer observer : observers) {
             ObserverRI obsRI = (ObserverRI) observer;
-            try {
-                obsRI.update();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            obsRI.update();
         }
     }
 
@@ -37,10 +33,14 @@ public class SubjectImpl implements SubjectRI {
     }
 
     @Override
+    public boolean isPaused() throws RemoteException {
+        return false;
+    }
 
+    @Override
     public void attach(ObserverRI obsRI) throws RemoteException {
         if (!this.observers.contains(obsRI))
-            this.observers.add(obsRI);
+            this.observers.add((Observer) obsRI);
     }
 
     @Override

@@ -1,22 +1,21 @@
 package edu.ufp.inf.sd.project.client;
 
-import edu.ufp.inf.sd.project.server.State;
+import edu.ufp.inf.sd.project.server.SubjectRI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Observer;
 
-public interface ObserverRI extends Remote, Observer {
-    /**
-     *
-     * @throws RemoteException
-     */
-    public void update() throws RemoteException;
+public interface ObserverRI extends Remote {
 
-    /**
-     *
-     * @return
-     * @throws RemoteException
-     */
-    public State getLastObserverState() throws RemoteException;
+    public void update(boolean jobState) throws RemoteException;
+
+    public SubjectRI getSubject() throws RemoteException;
+
+    public void setSubject(SubjectRI subjectRI) throws RemoteException;
+
+    public void startThread() throws RemoteException;
+
+    public void stopThread() throws RemoteException;
+
+    void update();
 }

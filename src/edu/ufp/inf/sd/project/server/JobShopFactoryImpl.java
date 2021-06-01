@@ -1,7 +1,5 @@
 package edu.ufp.inf.sd.project.server;
 
-import edu.ufp.inf.sd.project.client.DataBaseWorkers;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -9,11 +7,11 @@ import java.util.HashMap;
 public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFactoryRI {
 
     private HashMap<String, JobShopSessionImpl> sessions = new HashMap<>();
-    private DataBaseWorkers db;
+    private DB db;
 
-    public JobShopFactoryImpl(DataBaseWorkers dataBaseWorkers) throws RemoteException {
+    public JobShopFactoryImpl(DB DB) throws RemoteException {
         super();
-        this.db = dataBaseWorkers;
+        this.db = DB;
     }
 
     @Override
@@ -21,8 +19,7 @@ public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFa
      * register user
      */
     public boolean register(String username, String password) throws RemoteException {
-        boolean register = this.db.register(username, password);
-        return register;
+        return this.db.register(username, password);
     }
 
     @Override
@@ -33,6 +30,7 @@ public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFa
         if (this.sessions.containsKey(username)) {
             return this.sessions.get(username);
         }
+
         if (this.db.exists(username, password)) {
             JobShopSessionImpl lib = new JobShopSessionImpl(this.db);
             this.sessions.put(username, lib);
@@ -42,12 +40,4 @@ public class JobShopFactoryImpl extends UnicastRemoteObject implements JobShopFa
         return null;
     }
 
-    @Override
-    /**
-     * logout user
-     */
-    public JobShopSessionRI logout(String username) throws RemoteException {
-        this.sessions.remove(username);
-        return null;
-    }
 }

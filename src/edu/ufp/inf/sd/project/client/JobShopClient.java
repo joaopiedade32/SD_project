@@ -1,9 +1,6 @@
 package edu.ufp.inf.sd.project.client;
 
-import edu.ufp.inf.sd.project.server.JobGroupRI;
-import edu.ufp.inf.sd.project.server.JobShopFactoryRI;
-import edu.ufp.inf.sd.project.server.JobShopRI;
-import edu.ufp.inf.sd.project.server.JobShopSessionRI;
+import edu.ufp.inf.sd.project.server.*;
 import edu.ufp.inf.sd.project.util.geneticalgorithm.CrossoverStrategies;
 import edu.ufp.inf.sd.project.util.geneticalgorithm.GeneticAlgorithmJSSP;
 import edu.ufp.inf.sd.rmi.util.rmisetup.SetupContextRMI;
@@ -41,7 +38,7 @@ public class JobShopClient {
      */
     private JobShopRI jobShopRI;
     private Scanner scanner;
-    private DataBaseWorkers database;
+    private DB database;
     private JobShopSessionRI sessionRI;
     private JobShopFactoryRI factoryRI;
 
@@ -160,14 +157,14 @@ public class JobShopClient {
         }
     }
 
-    /**
+    /** todo
      * logout
      * @param username
      * @throws RemoteException
      */
     private void logout(String username) throws RemoteException {
         if (this.sessionRI != null) {
-            factoryRI.logout(username);
+            //factoryRI.logout(username, sessionRI);
             sessionRI = null;
         }
     }

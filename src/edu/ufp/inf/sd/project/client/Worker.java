@@ -1,31 +1,74 @@
 package edu.ufp.inf.sd.project.client;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import edu.ufp.inf.sd.project.server.JobShopImpl;
+import edu.ufp.inf.sd.project.server.SubjectRI;
+import edu.ufp.inf.sd.project.server.User;
+
 import java.io.IOException;
-import java.util.ArrayList;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class Worker {
+public class Worker extends UnicastRemoteObject implements ObserverRI, Runnable {
+    private SubjectRI subject;
 
-    private String userName;
+    private User user;
+
+    private Thread thread;      //worker thread (begins when we add a woker to the job group)
+
+    private boolean jobState;
+
+    private String username;
     private String password;
     private Scanner scanner;
     private int credits;
 
-    public Worker(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-        this.credits = 0;
+    public Worker(User user) throws RemoteException {
+        super();
+        this.user = user;
+        this.thread = new Thread(this);         //instantiating the thread
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public SubjectRI getSubject() {
+        return subject;
+    }
+
+    @Override
+    public void setSubject(SubjectRI subject) {
+        this.subject = subject;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    public boolean isJobState() {
+        return jobState;
+    }
+
+    public void setJobState(boolean jobState) {
+        this.jobState = jobState;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -36,6 +79,14 @@ public class Worker {
         this.password = password;
     }
 
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     public int getCredits() {
         return credits;
     }
@@ -44,78 +95,67 @@ public class Worker {
         this.credits = credits;
     }
 
+    /**
+     * gives a update on the job group state
+     * @param jobState
+     * @throws RemoteException
+     */
     @Override
-    public String toString() {
-        return "Worker{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    public void update(boolean jobState) throws RemoteException {
 
-    //todo
-    private int tabuSearch() throws IOException {
-
-        /*String sBest = first schedule found;
-        String bestCandidate = first schedule found;
-        ArrayList <String> tabuList = new ArrayList<>();
-        tabuList.add(first schedule found);
-
-        for (int i=0; i<listSize; i++){
-              sNeighborhood ← getNeighbors(bestCandidate)
-              bestCandidate ← sNeighborhood[0]
-              for (sCandidate in sNeighborhood)
-                   if ( (not tabuList.contains(sCandidate)) and (fitness(sCandidate) > fitness(bestCandidate)) )
-                        bestCandidate ← sCandidate
-                    end
-              end
-              if (fitness(bestCandidate) > fitness(sBest))
-                sBest ← bestCandidate
-              end
-              tabuList.push(bestCandidate)
-              if (tabuList.size > maxTabuSize)
-                tabuList.removeFirst()
-              end
-        }
-
-        return sBest;
-        */
-
-        return 0;
-    }
-
-    /**
-     * attempts to read data contained inside files
-     * todo: differentiate first line from the rest
-     * @throws IOException
-     */
-    private void getData() throws IOException {
-        System.out.print("filename: ");
-        String filename = scanner.nextLine(), delimiter = " ";
-        BufferedReader br = openBufferedReader(".//src//edu//ufp//inf//sd//project//data//" + filename + ".txt");
-        ArrayList<Integer> dataList = new ArrayList<>();
-        if (br != null) {
-            String line = br.readLine();
-            while (line != null) {
-                String[] text = line.split(delimiter);
-                for (int i = 0; i < line.length(); i++)
-                    dataList.add(i, Integer.valueOf(text[0]));
-                line = br.readLine();
-            }
-            br.close();
-        }
-    }
-
-    /**
-     * @param path - Buffered Reader Path
-     * @return
-     */
-    private BufferedReader openBufferedReader(String path) {
         try {
-            FileReader fr = new FileReader(path);
-            return new BufferedReader(fr);
-        } catch (FileNotFoundException e) {
+
+            this.setJobState(jobState);
+            this.stopThread();
+        } catch (RemoteException e) {
+
             e.printStackTrace();
         }
-        return null;
+    }
+
+    /**
+     * starts the thread
+     * @throws RemoteException
+     */
+    @Override
+    public void startThread() throws RemoteException {
+
+        this.getThread().start();
+    }
+
+    /**
+     * interrupts the thread
+     * @throws RemoteException
+     */
+    @Override
+    public void stopThread() throws RemoteException {
+        this.getThread().interrupt();
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void run() {
+
+    }
+
+
+    private void tabuSearch() throws IOException {
+        JobShopImpl jobShop = new JobShopImpl();
+        System.out.print("filename: ");
+        String filename = scanner.nextLine(), delimiter = " ";
+        String path = ".//src//edu//ufp//inf//sd//project//data//" + filename + ".txt";
+        jobShop.runTS(path);
+    }
+
+    private void geneticAlgorithm() throws IOException {
+        JobShopImpl jobShop = new JobShopImpl();
+        System.out.print("filename: ");
+        String filename = scanner.nextLine(), delimiter = " ";
+        String path = ".//src//edu//ufp//inf//sd//project//data//" + filename + ".txt";
+        //todo GA
     }
 }
